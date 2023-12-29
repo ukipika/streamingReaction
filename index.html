@@ -5,29 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ありがとう認識</title>
 
-<style type="text/css">
-.wrapper {
-video {
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  display: block;
-}
-}
-</style>
+  <style type="text/css">
+    .wrapper {
+      video {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        display: block;
+      }
+    }
+  </style>
 
 </head>
 <body>
   <h1>音声文字起こし</h1>
   <p id="transcription"></p>
-  <button onclick="startSpeechRecognition()">音声認識を開始</button>
 
-<div class="wrapper">
-  <video id="video" controls>
-    <source id="video1" src="video1.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
+  <div class="wrapper">
+    <video id="video" controls>
+      <source id="video1" src="video1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <button onclick="startSpeechRecognition()">音声認識を開始</button>
 
   <script>
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -49,7 +50,13 @@ video {
         }
       };
 
+      recognition.onend = () => {
+        // 音声認識が停止したら再度開始
+        recognition.start();
+      };
+
       function startSpeechRecognition() {
+        // ユーザーがボタンをクリックしたらマイクの使用を許可するダイアログが表示され、許可されたら音声認識を開始
         recognition.start();
       }
 
